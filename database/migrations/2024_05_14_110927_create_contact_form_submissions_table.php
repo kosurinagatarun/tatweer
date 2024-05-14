@@ -4,21 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContactSubmissionsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('contact_submissions', function (Blueprint $table) {
+        Schema::create('contact_form_submissions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('phone_number');
-            $table->json('service_type')->nullable();
+            $table->string('phone');
+            $table->json('service_type');
             $table->text('message');
             $table->timestamps();
         });
@@ -26,11 +24,9 @@ class CreateContactSubmissionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('contact_submissions');
+        Schema::dropIfExists('contact_form_submissions');
     }
-}
+};

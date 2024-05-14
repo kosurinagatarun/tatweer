@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactSubmission extends Model
+class ContactFormSubmission extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
         'email',
-        'phone_number',
+        'phone',
         'service_type',
         'message',
     ];
@@ -21,3 +21,5 @@ class ContactSubmission extends Model
         'service_type' => 'array',
     ];
 }
+
+

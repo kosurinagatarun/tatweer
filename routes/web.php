@@ -4,11 +4,46 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CounterController;
-use App\Http\Controllers\Admin\ContactFormController;
+// routes/web.php
+
+
+use App\Http\Controllers\WebContactFormController;
+use App\Http\Controllers\Admin\ContactFormController as AdminContactFormController;
+
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('This is a test email', function ($message) {
+            $message->to('nagatarunkosuri@gmail.com')
+                ->subject('Test Email');
+        });
+        return 'Email sent successfully';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/contact-us', [WebContactFormController::class, 'showForm'])->name('contact.form');
+Route::post('/contact-us', [WebContactFormController::class, 'submitForm'])->name('contact.submit');
+
+// Admin routes
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/contact-forms', [AdminContactFormController::class, 'index'])->name('contact_forms.index');
+    Route::get('/contact-forms/{id}', [AdminContactFormController::class, 'show'])->name('contact_forms.show');
+});
+
+
 
 // Public Routes
 Route::get('/', function () {
-    return view('welcome');
+    return view('web.index');
+});
+Route::get('/about', function () {
+    return view('web.about');
+});
+Route::get('/ui_ux', function () {
+    return view('web.ui_ux');
 });
 Route::get('/header', function () {
     return view('layouts.admin');
@@ -57,14 +92,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 });
-// Contact form routes
-Route::get('/contact', [ContactFormController::class, 'showContactForm'])->name('contact.form');
-Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 
-// Admin panel routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/submissions', [ContactFormController::class, 'viewSubmissions'])->name('admin.submissions');
-});
 
 
 // Authentication Routes

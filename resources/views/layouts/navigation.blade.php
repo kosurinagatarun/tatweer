@@ -23,7 +23,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.submissions')" :active="request()->routeIs('admin.submissions')">
+                    <x-nav-link :href="route('admin.contact_forms.index')" :active="request()->routeIs('admin.submissions')">
                         {{ __('Submissions') }}
                     </x-nav-link>
                 </div>
